@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Gym & Clean Day Tracker (Cloud Synced)</title>
+    <title>Gym, Home Workout & Clean Day Tracker</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,6 +18,7 @@
                             card: '#1e293b',
                             accent: '#10b981',
                             accentHover: '#059669',
+                            home: '#0d9488',
                             skip: '#ef4444'
                         },
                         clean: {
@@ -74,23 +75,23 @@
     <!-- COMPACT MOBILE-FIRST HEADER -->
     <header class="border-b border-slate-800/80 bg-slate-900/95 sticky top-0 z-30 backdrop-blur-md px-3 py-2.5 sm:px-6">
         <div class="max-w-4xl mx-auto flex items-center justify-between gap-2">
-            <!-- App Branding & Cloud Status -->
+            <!-- App Branding & Storage Status -->
             <div class="flex items-center gap-2.5">
-                <div id="appLogoBadge" class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 via-cyan-500 to-indigo-500 flex items-center justify-center text-white text-base shadow-md shadow-emerald-500/20 shrink-0">
-                    <i class="fa-solid fa-shield-halved" id="appIcon"></i>
+                <div id="appLogoBadge" class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500 flex items-center justify-center text-slate-950 font-black text-base shadow-md shadow-emerald-500/20 shrink-0">
+                    <i class="fa-solid fa-dumbbell" id="appIcon"></i>
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
                         <h1 class="text-sm sm:text-base font-black tracking-tight text-white leading-none" id="appTitle">
-                            GYM & CLEAN DAY
+                            WORKOUT & FOCUS
                         </h1>
-                        <!-- Cloud Sync Status Badge -->
-                        <span id="cloudSyncBadge" class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-slate-800 text-slate-400 border border-slate-700/70 flex items-center gap-1 transition-all">
-                            <i class="fa-solid fa-cloud text-amber-400 animate-pulse" id="cloudSyncIcon"></i>
-                            <span id="cloudSyncText">Connecting...</span>
+                        <!-- Pure LocalStorage Status Badge -->
+                        <span id="storageBadge" class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-600/50 flex items-center gap-1">
+                            <i class="fa-solid fa-hard-drive text-emerald-400"></i>
+                            <span>Local Saved</span>
                         </span>
                     </div>
-                    <p class="text-[10px] text-slate-400 font-medium leading-none mt-1" id="appSubtitle">Disiplin Senaman & Pemulihan Kendiri</p>
+                    <p class="text-[10px] text-slate-400 font-medium leading-none mt-1" id="appSubtitle">Rekod Disiplin Gym, Home Workout & Clean Day</p>
                 </div>
             </div>
 
@@ -120,7 +121,7 @@
                 <i class="fa-solid fa-layer-group text-amber-400 text-[11px]"></i> <span>Semua</span>
             </button>
             <button id="tabGym" onclick="setViewMode('gym')" class="flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300">
-                <i class="fa-solid fa-dumbbell text-emerald-400 text-[11px]"></i> <span>Gym</span>
+                <i class="fa-solid fa-dumbbell text-emerald-400 text-[11px]"></i> <span>Workout</span>
             </button>
             <button id="tabClean" onclick="setViewMode('clean')" class="flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-300">
                 <i class="fa-solid fa-shield text-cyan-400 text-[11px]"></i> <span id="labelTabClean">Clean Day</span>
@@ -129,28 +130,34 @@
 
         <!-- COMPACT HORIZONTAL SCROLLABLE STATS STRIP -->
         <section class="flex gap-2 overflow-x-auto no-scrollbar pb-0.5">
-            <!-- Gym Days Stat -->
-            <div class="bg-slate-900/80 border border-slate-800/80 rounded-xl p-2.5 min-w-[130px] flex-1 flex flex-col justify-between shadow-sm shrink-0">
+            <!-- Total Workout Days (Gym + Home) -->
+            <div class="bg-slate-900/80 border border-slate-800/80 rounded-xl p-2.5 min-w-[145px] flex-1 flex flex-col justify-between shadow-sm shrink-0">
                 <div class="flex items-center justify-between text-slate-400 mb-1">
-                    <span class="text-[10px] font-bold uppercase tracking-wider">Gym Days</span>
-                    <i class="fa-solid fa-dumbbell text-emerald-400 text-xs"></i>
+                    <span class="text-[10px] font-bold uppercase tracking-wider">Active Workouts</span>
+                    <i class="fa-solid fa-bolt text-emerald-400 text-xs"></i>
                 </div>
                 <div class="flex items-baseline justify-between">
-                    <span class="text-xl font-extrabold text-emerald-400" id="statGymDays">0</span>
-                    <span class="text-[10px] text-slate-400 font-semibold" id="statGymStreak">0d streak</span>
+                    <span class="text-xl font-extrabold text-emerald-400" id="statWorkoutDays">0</span>
+                    <span class="text-[10px] text-slate-400 font-semibold" id="statWorkoutStreak">0d streak</span>
+                </div>
+                <div class="mt-1 pt-1 border-t border-slate-800/60 flex items-center justify-between text-[9px] text-slate-400 font-medium">
+                    <span class="text-emerald-400" id="statGymSub">Gym: 0</span>
+                    <span class="text-teal-400" id="statHomeSub">Home: 0</span>
+                    <span class="text-rose-400" id="statSkipSub">Skip: 0</span>
                 </div>
             </div>
 
-            <!-- Gym Rate Stat -->
+            <!-- Workout Consistency Rate (%) -->
             <div class="bg-slate-900/80 border border-slate-800/80 rounded-xl p-2.5 min-w-[130px] flex-1 flex flex-col justify-between shadow-sm shrink-0">
                 <div class="flex items-center justify-between text-slate-400 mb-1">
-                    <span class="text-[10px] font-bold uppercase tracking-wider">Kadar Gym</span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider">Kadar Workout</span>
                     <i class="fa-solid fa-chart-line text-emerald-400 text-xs"></i>
                 </div>
                 <div class="flex items-baseline justify-between">
-                    <span class="text-xl font-extrabold text-emerald-300" id="statGymRate">0%</span>
+                    <span class="text-xl font-extrabold text-teal-300" id="statWorkoutRate">0%</span>
                     <span class="text-[10px] text-slate-400 font-semibold">Bulan Ini</span>
                 </div>
+                <div class="mt-1 text-[9px] text-slate-500 truncate" id="statWorkoutRateSub">0 drpd 0 hari aktif</div>
             </div>
 
             <!-- Clean Days Stat -->
@@ -163,18 +170,20 @@
                     <span class="text-xl font-extrabold text-cyan-400" id="statCleanDays">0</span>
                     <span class="text-[10px] text-cyan-300 font-bold" id="statCleanStreak">0d 🔥</span>
                 </div>
+                <div class="mt-1 text-[9px] text-slate-500 truncate">Status Bersih</div>
             </div>
 
             <!-- Best Clean Streak Stat -->
             <div class="bg-slate-900/80 border border-slate-800/80 rounded-xl p-2.5 min-w-[135px] flex-1 flex flex-col justify-between shadow-sm shrink-0">
                 <div class="flex items-center justify-between text-slate-400 mb-1">
-                    <span class="text-[10px] font-bold uppercase tracking-wider">Best Streak</span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider">Best Clean</span>
                     <i class="fa-solid fa-fire text-amber-400 text-xs"></i>
                 </div>
                 <div class="flex items-baseline justify-between">
                     <span class="text-xl font-extrabold text-amber-400" id="statBestCleanStreak">0 Hari</span>
                     <span class="text-[9px] text-indigo-300 font-extrabold truncate max-w-[55px]" id="statMilestoneBadge">🌱 Novice</span>
                 </div>
+                <div class="mt-1 text-[9px] text-slate-500 truncate">Rekod Terpanjang</div>
             </div>
         </section>
 
@@ -294,12 +303,15 @@
         </section>
 
         <!-- QUICK MARK TODAY BUTTONS -->
-        <section class="grid grid-cols-2 gap-2">
-            <button onclick="quickMarkToday('gym')" class="w-full py-3 px-3 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-1.5 active:scale-95 transition">
-                <i class="fa-solid fa-dumbbell text-sm"></i> Tanda Gym Hari Ini
+        <section class="grid grid-cols-3 gap-1.5">
+            <button onclick="quickMarkToday('gym')" class="py-2.5 px-2 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-slate-950 font-black text-xs rounded-xl shadow-md shadow-emerald-500/20 flex items-center justify-center gap-1 active:scale-95 transition">
+                <i class="fa-solid fa-dumbbell text-xs"></i> <span>Gym</span>
             </button>
-            <button onclick="quickMarkToday('clean')" class="w-full py-3 px-3 bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-500 hover:to-cyan-400 text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-1.5 active:scale-95 transition">
-                <i class="fa-solid fa-shield text-sm"></i> <span id="labelQuickMarkClean">Tanda Clean Day</span>
+            <button onclick="quickMarkToday('homeworkout')" class="py-2.5 px-2 bg-gradient-to-r from-teal-600 to-teal-500 hover:from-teal-500 hover:to-teal-400 text-slate-950 font-black text-xs rounded-xl shadow-md shadow-teal-500/20 flex items-center justify-center gap-1 active:scale-95 transition">
+                <i class="fa-solid fa-house-user text-xs"></i> <span>Home Workout</span>
+            </button>
+            <button onclick="quickMarkToday('clean')" class="py-2.5 px-2 bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-500 hover:to-cyan-400 text-slate-950 font-black text-xs rounded-xl shadow-md shadow-cyan-500/20 flex items-center justify-center gap-1 active:scale-95 transition">
+                <i class="fa-solid fa-shield text-xs"></i> <span id="labelQuickMarkClean">Clean Day</span>
             </button>
         </section>
 
@@ -307,7 +319,7 @@
 
     <!-- FOOTER -->
     <footer class="border-t border-slate-800/80 bg-slate-950 py-3 text-center text-[11px] text-slate-500 mt-4">
-        <p>© Gym & Clean Day Tracker — Awan & Peranti Diselaraskan</p>
+        <p>© Gym, Home Workout & Clean Day Tracker — Pure Local Persistence</p>
     </footer>
 
     <!-- MOBILE BOTTOM SHEET DRAWER -->
@@ -323,38 +335,44 @@
                 <h3 class="text-base sm:text-lg font-black text-white flex items-center gap-2" id="drawerDateTitle">
                     <i class="fa-regular fa-calendar text-emerald-400"></i> Rekod Tarikh
                 </h3>
-                <p class="text-[11px] text-slate-400">Tekan status atau tag untuk kemaskini harian.</p>
+                <p class="text-[11px] text-slate-400">Pilih status workout & disiplin harian anda.</p>
             </div>
             <button onclick="closeDrawer()" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white">
                 <i class="fa-solid fa-xmark text-sm"></i>
             </button>
         </div>
 
-        <!-- SECTION A: GYM STATUS & TAGS -->
-        <div class="bg-slate-950/70 p-3 rounded-2xl border border-slate-800 space-y-2">
+        <!-- SECTION A: WORKOUT STATUS (4 OPTIONS) & TAGS -->
+        <div class="bg-slate-950/70 p-3 rounded-2xl border border-slate-800 space-y-2.5">
             <div class="flex items-center justify-between">
                 <label class="text-xs font-black uppercase text-emerald-400 flex items-center gap-1.5">
-                    <i class="fa-solid fa-dumbbell"></i> Gym Workout
+                    <i class="fa-solid fa-bolt"></i> Workout Status
                 </label>
+                <span class="text-[10px] text-slate-500">Gym / Home / Skip / Clear</span>
             </div>
-            <!-- Segmented Control Buttons -->
-            <div class="grid grid-cols-3 gap-1.5">
-                <button type="button" id="drawerBtnGym" onclick="setDrawerGymStatus('gym')" class="py-2.5 px-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 font-bold text-xs flex items-center justify-center gap-1 active:scale-95 transition">
-                    <i class="fa-solid fa-check text-emerald-400"></i> Gym (✓)
+            
+            <!-- 4-Option Segmented Control Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+                <button type="button" id="drawerBtnGym" onclick="setDrawerGymStatus('gym')" class="py-2.5 px-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition">
+                    <i class="fa-solid fa-dumbbell text-emerald-400"></i> Gym (✓)
                 </button>
-                <button type="button" id="drawerBtnGymSkip" onclick="setDrawerGymStatus('skip')" class="py-2.5 px-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 font-bold text-xs flex items-center justify-center gap-1 active:scale-95 transition">
-                    <i class="fa-solid fa-xmark text-rose-400"></i> Rest (✗)
+                <button type="button" id="drawerBtnHome" onclick="setDrawerGymStatus('homeworkout')" class="py-2.5 px-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition">
+                    <i class="fa-solid fa-house-user text-teal-400"></i> Home (✓)
                 </button>
-                <button type="button" id="drawerBtnGymNone" onclick="setDrawerGymStatus(null)" class="py-2.5 px-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-500 font-bold text-xs flex items-center justify-center gap-1 active:scale-95 transition">
-                    Kosong
+                <button type="button" id="drawerBtnGymSkip" onclick="setDrawerGymStatus('skip')" class="py-2.5 px-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition">
+                    <i class="fa-solid fa-xmark text-rose-400"></i> Skip (✗)
+                </button>
+                <button type="button" id="drawerBtnGymNone" onclick="setDrawerGymStatus(null)" class="py-2.5 px-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-500 font-bold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition">
+                    <i class="fa-solid fa-ban text-slate-500"></i> Clear
                 </button>
             </div>
-            <!-- Preset Gym Tags -->
+
+            <!-- Preset Workout Tags -->
             <div class="pt-1">
-                <span class="text-[10px] font-bold text-slate-400 block mb-1">Preset Tag:</span>
+                <span class="text-[10px] font-bold text-slate-400 block mb-1">Preset Tag Workout:</span>
                 <div class="flex flex-wrap gap-1.5" id="drawerGymTags"></div>
             </div>
-            <input type="text" id="drawerGymNote" placeholder="Nota Gym (cth: Bench press 90kg)..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+            <input type="text" id="drawerGymNote" placeholder="Nota Workout (cth: Push 4 set, Pull up 10x)..." class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500">
         </div>
 
         <!-- SECTION B: CLEAN DAY STATUS & REFLECTION TAGS -->
@@ -373,7 +391,7 @@
                     <i class="fa-solid fa-triangle-exclamation text-rose-400"></i> Relapse (✗)
                 </button>
                 <button type="button" id="drawerBtnCleanNone" onclick="setDrawerCleanStatus(null)" class="py-2.5 px-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-500 font-bold text-xs flex items-center justify-center gap-1 active:scale-95 transition">
-                    Kosong
+                    Clear
                 </button>
             </div>
             <!-- Preset Clean Tags -->
@@ -385,8 +403,8 @@
         </div>
 
         <!-- SAVE BUTTON -->
-        <button onclick="saveDrawerData()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black rounded-xl text-xs shadow-lg shadow-emerald-500/10 active:scale-95 transition flex items-center justify-center gap-1.5">
-            <i class="fa-solid fa-floppy-disk"></i> Simpan & Tutup
+        <button onclick="saveDrawerData()" class="w-full py-3 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black rounded-xl text-xs shadow-lg shadow-emerald-500/10 active:scale-95 transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan Rekod & Tutup
         </button>
     </div>
 
@@ -401,12 +419,13 @@
                 <h3 class="text-base font-bold text-white flex items-center gap-2">
                     <i class="fa-solid fa-database text-cyan-400"></i> Data Backup & Reset
                 </h3>
-                <p class="text-[11px] text-slate-400 mt-0.5">Eksport data peranti atau reset bulan semasa.</p>
+                <p class="text-[11px] text-slate-400 mt-0.5">Semua data disimpan terus secara kekal dalam peranti pelayar ini (localStorage).</p>
             </div>
 
             <!-- Export Section -->
             <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
                 <h4 class="text-xs font-bold text-slate-200">Muat Turun Backup JSON</h4>
+                <p class="text-[10px] text-slate-400">Simpan fail JSON ini untuk dipindahkan ke peranti lain atau sebagai simpanan sandaran.</p>
                 <button onclick="exportJSONData()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/30 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition">
                     <i class="fa-solid fa-download"></i> Muat Turun Data (.JSON)
                 </button>
@@ -441,33 +460,18 @@
     <!-- TOAST NOTIFICATIONS -->
     <div id="toastContainer" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 pointer-events-none w-full max-w-xs px-4"></div>
 
-    <!-- FIREBASE & CORE APP SCRIPT (MODULE) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // APP CONFIG & FIREBASE INITIALIZATION
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'gym-clean-tracker-app';
-        let firebaseConfig = null;
-        if (typeof __firebase_config !== 'undefined') {
-            try { firebaseConfig = JSON.parse(__firebase_config); } catch(e) { console.warn("Firebase config error", e); }
-        }
-
-        let db = null;
-        let auth = null;
-        let userId = null;
-        let firestoreDocRef = null;
-
-        const STORAGE_KEY = 'gym_clean_tracker_data_v2';
+    <!-- CORE APPLICATION JAVASCRIPT -->
+    <script>
+        const STORAGE_KEY = 'gym_clean_tracker_data_v3';
         const STEALTH_KEY = 'gym_clean_tracker_stealth_v1';
 
-        const PRESET_GYM_TAGS = [
+        const PRESET_WORKOUT_TAGS = [
             { label: 'Push', icon: 'fa-hand-fist' },
             { label: 'Pull', icon: 'fa-dumbbell' },
             { label: 'Legs', icon: 'fa-person-running' },
             { label: 'Cardio', icon: 'fa-heart-pulse' },
-            { label: 'Full Body', icon: 'fa-child-reaching' },
+            { label: 'Bodyweight / Abs', icon: 'fa-child-reaching' },
+            { label: 'Full Body', icon: 'fa-bolt' },
             { label: 'Rest Day', icon: 'fa-bed' }
         ];
 
@@ -493,147 +497,59 @@
 
         // Drawer Temporary State
         let drawerSelectedDateStr = null;
-        let drawerGymStatus = null;
+        let drawerGymStatus = null; // 'gym' | 'homeworkout' | 'skip' | null
         let drawerGymTag = '';
-        let drawerCleanStatus = null;
+        let drawerCleanStatus = null; // 'clean' | 'relapse' | null
         let drawerCleanTag = '';
 
-        // Expose functions globally for inline HTML events
-        window.toggleStealthMode = toggleStealthMode;
-        window.openExportImportModal = openExportImportModal;
-        window.closeExportImportModal = closeExportImportModal;
-        window.setViewMode = setViewMode;
-        window.changeMonth = changeMonth;
-        window.goToToday = goToToday;
-        window.quickMarkToday = quickMarkToday;
-        window.openDrawer = openDrawer;
-        window.closeDrawer = closeDrawer;
-        window.setDrawerGymStatus = setDrawerGymStatus;
-        window.setDrawerCleanStatus = setDrawerCleanStatus;
-        window.saveDrawerData = saveDrawerData;
-        window.exportJSONData = exportJSONData;
-        window.handleImportJSON = handleImportJSON;
-        window.showResetMonthConfirm = showResetMonthConfirm;
-        window.executeResetMonth = executeResetMonth;
-        window.cancelResetMonth = cancelResetMonth;
-
-        window.addEventListener('DOMContentLoaded', async () => {
+        window.addEventListener('DOMContentLoaded', () => {
             loadFromLocalStorage();
+            migrateLegacyData();
             loadStealthState();
             setupDrawerTags();
             setViewMode('dual');
-
-            // Initialize Cloud Sync if config exists
-            if (firebaseConfig) {
-                try {
-                    const app = initializeApp(firebaseConfig);
-                    auth = getAuth(app);
-                    db = getFirestore(app);
-
-                    updateCloudStatus('syncing', 'Menyambung...');
-
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-
-                    userId = auth.currentUser?.uid || 'anonymous_user';
-                    
-                    // Strict Rule 1 Path for Private User Habits:
-                    firestoreDocRef = doc(db, 'artifacts', appId, 'users', userId, 'trackerData', 'user_habits');
-
-                    // Setup Realtime Cloud Listener
-                    onSnapshot(firestoreDocRef, (docSnap) => {
-                        if (docSnap.exists()) {
-                            const cloudPayload = docSnap.data();
-                            if (cloudPayload.habitData) {
-                                habitData = cloudPayload.habitData;
-                                saveToLocalStorage();
-                            }
-                            if (typeof cloudPayload.isStealthMode === 'boolean') {
-                                isStealthMode = cloudPayload.isStealthMode;
-                                applyStealthUI();
-                            }
-                            renderCalendar();
-                            renderStats();
-                        } else {
-                            // First time cloud sync - push local data up
-                            syncDataToCloud();
-                        }
-                        updateCloudStatus('online', 'Tersimpan');
-                    }, (err) => {
-                        console.warn("Firestore listener error", err);
-                        updateCloudStatus('offline', 'Luar Talian');
-                    });
-
-                } catch (e) {
-                    console.warn("Firebase Auth Error", e);
-                    updateCloudStatus('offline', 'Mod Peranti');
-                }
-            } else {
-                updateCloudStatus('offline', 'Mod Peranti');
-            }
+            renderCalendar();
+            renderStats();
         });
-
-        function updateCloudStatus(status, text) {
-            const icon = document.getElementById('cloudSyncIcon');
-            const badge = document.getElementById('cloudSyncBadge');
-            const label = document.getElementById('cloudSyncText');
-
-            if (!icon || !badge || !label) return;
-
-            label.innerText = text;
-
-            if (status === 'syncing') {
-                icon.className = 'fa-solid fa-cloud-arrow-up text-amber-400 animate-pulse';
-                badge.className = 'px-2 py-0.5 rounded-full text-[9px] font-bold bg-amber-950/40 text-amber-300 border border-amber-600/40 flex items-center gap-1';
-            } else if (status === 'online') {
-                icon.className = 'fa-solid fa-cloud-check text-emerald-400';
-                badge.className = 'px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-950/40 text-emerald-300 border border-emerald-600/40 flex items-center gap-1';
-            } else {
-                icon.className = 'fa-solid fa-database text-slate-400';
-                badge.className = 'px-2 py-0.5 rounded-full text-[9px] font-bold bg-slate-800 text-slate-400 border border-slate-700/60 flex items-center gap-1';
-            }
-        }
-
-        async function syncDataToCloud() {
-            if (!firestoreDocRef || !auth.currentUser) return;
-            try {
-                updateCloudStatus('syncing', 'Menyimpan...');
-                await setDoc(firestoreDocRef, {
-                    habitData: habitData,
-                    isStealthMode: isStealthMode,
-                    lastUpdated: new Date().toISOString()
-                }, { merge: true });
-                updateCloudStatus('online', 'Tersimpan');
-            } catch (e) {
-                console.warn("Failed to sync to cloud", e);
-                updateCloudStatus('offline', 'Ralat Awan');
-            }
-        }
 
         function loadFromLocalStorage() {
             try {
                 const stored = localStorage.getItem(STORAGE_KEY);
-                if (stored) habitData = JSON.parse(stored);
-                else habitData = {};
+                if (stored) {
+                    habitData = JSON.parse(stored);
+                } else {
+                    // Check fallback for v2 key
+                    const oldV2 = localStorage.getItem('gym_clean_tracker_data_v2');
+                    if (oldV2) habitData = JSON.parse(oldV2);
+                    else habitData = {};
+                }
             } catch (e) {
+                console.error("Local storage load error", e);
                 habitData = {};
             }
+        }
+
+        function migrateLegacyData() {
+            let updated = false;
+            Object.keys(habitData).forEach(key => {
+                const entry = habitData[key];
+                if (entry) {
+                    // Legacy boolean or string 'done' check
+                    if (entry.gymStatus === 'done' || entry.gymStatus === true) {
+                        entry.gymStatus = 'gym';
+                        updated = true;
+                    }
+                }
+            });
+            if (updated) saveToLocalStorage();
         }
 
         function saveToLocalStorage() {
             try {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(habitData));
             } catch (e) {
-                console.error("Save error", e);
+                console.error("LocalStorage save error", e);
             }
-        }
-
-        function saveAllData() {
-            saveToLocalStorage();
-            syncDataToCloud();
         }
 
         function loadStealthState() {
@@ -647,7 +563,6 @@
             applyStealthUI();
             renderCalendar();
             renderStats();
-            syncDataToCloud();
             showToast(isStealthMode ? '🔒 Mod Privasi Aktif (Focus Mode)' : '🔓 Mod Normal (Clean Day)', 'info');
         }
 
@@ -656,7 +571,7 @@
             document.getElementById('labelTabClean').innerText = cleanText;
             document.getElementById('labelStatCleanHeader').innerText = isStealthMode ? 'Focus Days' : 'Clean Days';
             document.getElementById('drawerLabelCleanHeader').innerHTML = `<i class="fa-solid fa-shield"></i> ${cleanText} (Disiplin Mental)`;
-            document.getElementById('labelQuickMarkClean').innerText = `Tanda ${cleanText}`;
+            document.getElementById('labelQuickMarkClean').innerText = cleanText;
             
             const stealthBtn = document.getElementById('btnStealth');
             const stealthIcon = document.getElementById('stealthIcon');
@@ -749,50 +664,56 @@
                 let indicatorsHtml = '';
 
                 if (currentViewMode === 'dual') {
-                    // Gym Badge
-                    let gymIconClass = 'bg-slate-900 text-slate-600 border-slate-800';
-                    let gymChar = '🏋️';
+                    // Workout Badge (Gym vs Home vs Skip)
+                    let gymBadgeClass = 'bg-slate-900 text-slate-600 border-slate-800';
+                    let gymChar = '<i class="fa-solid fa-dumbbell text-[8px]"></i>';
                     if (dayData.gymStatus === 'gym') {
-                        gymIconClass = 'bg-emerald-950 text-emerald-400 border-emerald-500/60 shadow-sm';
+                        gymBadgeClass = 'bg-emerald-950 text-emerald-400 border-emerald-500/60 shadow-sm font-black';
                         gymChar = '✓';
+                    } else if (dayData.gymStatus === 'homeworkout') {
+                        gymBadgeClass = 'bg-teal-950 text-teal-400 border-teal-500/60 shadow-sm font-black';
+                        gymChar = '🏠';
                     } else if (dayData.gymStatus === 'skip') {
-                        gymIconClass = 'bg-rose-950 text-rose-400 border-rose-500/60';
+                        gymBadgeClass = 'bg-rose-950 text-rose-400 border-rose-500/60 font-black';
                         gymChar = '✗';
                     }
 
                     // Clean Badge
-                    let cleanIconClass = 'bg-slate-900 text-slate-600 border-slate-800';
+                    let cleanBadgeClass = 'bg-slate-900 text-slate-600 border-slate-800';
                     let cleanChar = '🛡️';
                     if (dayData.cleanStatus === 'clean') {
-                        cleanIconClass = 'bg-cyan-950 text-cyan-400 border-cyan-500/60 shadow-sm';
+                        cleanBadgeClass = 'bg-cyan-950 text-cyan-400 border-cyan-500/60 shadow-sm font-black';
                         cleanChar = '✓';
                     } else if (dayData.cleanStatus === 'relapse') {
-                        cleanIconClass = 'bg-rose-950 text-rose-400 border-rose-500/60';
+                        cleanBadgeClass = 'bg-rose-950 text-rose-400 border-rose-500/60 font-black';
                         cleanChar = '✗';
                     }
 
                     indicatorsHtml = `
                         <div class="grid grid-cols-2 gap-0.5 mt-1">
-                            <div class="h-5 rounded-md border text-[9px] font-extrabold flex items-center justify-center ${gymIconClass}">
+                            <div class="h-5 rounded-md border text-[9px] font-extrabold flex items-center justify-center ${gymBadgeClass}">
                                 ${gymChar}
                             </div>
-                            <div class="h-5 rounded-md border text-[9px] font-extrabold flex items-center justify-center ${cleanIconClass}">
+                            <div class="h-5 rounded-md border text-[9px] font-extrabold flex items-center justify-center ${cleanBadgeClass}">
                                 ${cleanChar}
                             </div>
                         </div>
                     `;
                 } else if (currentViewMode === 'gym') {
                     let bg = 'bg-slate-900/60 text-slate-600 border-slate-800';
-                    let symbol = '<i class="fa-solid fa-dumbbell text-[9px]"></i>';
+                    let symbol = '<i class="fa-solid fa-bolt text-[9px]"></i>';
                     if (dayData.gymStatus === 'gym') {
                         bg = 'bg-emerald-950/90 text-emerald-400 border-emerald-500/60 font-black';
                         symbol = '✓ Gym';
+                    } else if (dayData.gymStatus === 'homeworkout') {
+                        bg = 'bg-teal-950/90 text-teal-300 border-teal-500/60 font-black';
+                        symbol = '✓ Home';
                     } else if (dayData.gymStatus === 'skip') {
                         bg = 'bg-rose-950/90 text-rose-400 border-rose-500/60 font-black';
                         symbol = '✗ Skip';
                     }
                     indicatorsHtml = `
-                        <div class="h-6 w-full rounded-md border text-[10px] flex items-center justify-center mt-1 ${bg}">
+                        <div class="h-6 w-full rounded-md border text-[9px] flex items-center justify-center mt-1 ${bg}">
                             ${symbol}
                         </div>
                     `;
@@ -807,7 +728,7 @@
                         symbol = '✗ Relapse';
                     }
                     indicatorsHtml = `
-                        <div class="h-6 w-full rounded-md border text-[10px] flex items-center justify-center mt-1 ${bg}">
+                        <div class="h-6 w-full rounded-md border text-[9px] flex items-center justify-center mt-1 ${bg}">
                             ${symbol}
                         </div>
                     `;
@@ -823,39 +744,82 @@
             const month = currentDate.getMonth();
 
             let gymCount = 0;
-            let gymSkipCount = 0;
+            let homeWorkoutCount = 0;
+            let workoutSkipCount = 0;
             let cleanCount = 0;
 
             Object.keys(habitData).forEach(key => {
                 const [y, m] = key.split('-').map(Number);
                 if (y === year && (m - 1) === month) {
-                    if (habitData[key].gymStatus === 'gym') gymCount++;
-                    if (habitData[key].gymStatus === 'skip') gymSkipCount++;
+                    const st = habitData[key].gymStatus;
+                    if (st === 'gym') gymCount++;
+                    else if (st === 'homeworkout') homeWorkoutCount++;
+                    else if (st === 'skip') workoutSkipCount++;
 
                     if (habitData[key].cleanStatus === 'clean') cleanCount++;
                 }
             });
 
-            document.getElementById('statGymDays').innerText = gymCount;
-            const totalGymLogged = gymCount + gymSkipCount;
-            const gymRate = totalGymLogged > 0 ? Math.round((gymCount / totalGymLogged) * 100) : 0;
-            document.getElementById('statGymRate').innerText = `${gymRate}%`;
+            const totalActiveWorkouts = gymCount + homeWorkoutCount;
+            document.getElementById('statWorkoutDays').innerText = totalActiveWorkouts;
+            document.getElementById('statGymSub').innerText = `Gym: ${gymCount}`;
+            document.getElementById('statHomeSub').innerText = `Home: ${homeWorkoutCount}`;
+            document.getElementById('statSkipSub').innerText = `Skip: ${workoutSkipCount}`;
+
+            const totalWorkoutLogged = totalActiveWorkouts + workoutSkipCount;
+            const workoutRate = totalWorkoutLogged > 0 ? Math.round((totalActiveWorkouts / totalWorkoutLogged) * 100) : 0;
+            document.getElementById('statWorkoutRate').innerText = `${workoutRate}%`;
+            document.getElementById('statWorkoutRateSub').innerText = `${totalActiveWorkouts} drpd ${totalWorkoutLogged} direkod`;
 
             document.getElementById('statCleanDays').innerText = cleanCount;
 
             // Streaks
-            const gymStreaks = calculateStreak('gymStatus', 'gym');
-            document.getElementById('statGymStreak').innerText = `${gymStreaks.currentStreak}d streak`;
+            const activeWorkoutStreaks = calculateWorkoutStreak();
+            document.getElementById('statWorkoutStreak').innerText = `${activeWorkoutStreaks.currentStreak}d streak`;
 
             const cleanStreaks = calculateStreak('cleanStatus', 'clean');
             document.getElementById('statCleanStreak').innerText = `${cleanStreaks.currentStreak}d 🔥`;
             document.getElementById('statBestCleanStreak').innerText = `${cleanStreaks.bestStreak} H`;
 
             // Milestone Badge Highlight
-            const curStreak = cleanStreaks.currentStreak;
-            document.getElementById('statMilestoneBadge').innerText = getMilestoneTitle(curStreak);
+            const curCleanStreak = cleanStreaks.currentStreak;
+            document.getElementById('statMilestoneBadge').innerText = getMilestoneTitle(curCleanStreak);
 
-            updateMilestoneCardsUI(curStreak);
+            updateMilestoneCardsUI(curCleanStreak);
+        }
+
+        function calculateWorkoutStreak() {
+            // Count both 'gym' and 'homeworkout' as active workout streak
+            const dates = Object.keys(habitData)
+                .filter(k => habitData[k].gymStatus === 'gym' || habitData[k].gymStatus === 'homeworkout')
+                .sort();
+
+            if (dates.length === 0) return { currentStreak: 0, bestStreak: 0 };
+
+            const habitSet = new Set(dates);
+            let checkDate = new Date(todayDate);
+            checkDate.setHours(0,0,0,0);
+
+            let todayKey = formatDateKey(checkDate.getFullYear(), checkDate.getMonth(), checkDate.getDate());
+            let currentStreak = 0;
+
+            if (!habitSet.has(todayKey)) {
+                checkDate.setDate(checkDate.getDate() - 1);
+                let yesterdayKey = formatDateKey(checkDate.getFullYear(), checkDate.getMonth(), checkDate.getDate());
+                if (habitSet.has(yesterdayKey)) {
+                    while (habitSet.has(formatDateKey(checkDate.getFullYear(), checkDate.getMonth(), checkDate.getDate()))) {
+                        currentStreak++;
+                        checkDate.setDate(checkDate.getDate() - 1);
+                    }
+                }
+            } else {
+                while (habitSet.has(formatDateKey(checkDate.getFullYear(), checkDate.getMonth(), checkDate.getDate()))) {
+                    currentStreak++;
+                    checkDate.setDate(checkDate.getDate() - 1);
+                }
+            }
+
+            return { currentStreak };
         }
 
         function calculateStreak(statusField, positiveValue) {
@@ -958,12 +922,17 @@
             if (type === 'gym') {
                 habitData[todayKey] = { ...curr, gymStatus: 'gym' };
                 showToast('✓ Gym Hari Ini berjaya ditanda!', 'success');
+                triggerConfetti();
+            } else if (type === 'homeworkout') {
+                habitData[todayKey] = { ...curr, gymStatus: 'homeworkout' };
+                showToast('🏠 Home Workout Hari Ini berjaya ditanda!', 'success');
+                triggerConfetti();
             } else if (type === 'clean') {
                 habitData[todayKey] = { ...curr, cleanStatus: 'clean' };
                 showToast(`🛡️ ${isStealthMode ? 'Focus Day' : 'Clean Day'} berjaya ditanda!`, 'success');
+                triggerConfetti();
             }
-            triggerConfetti();
-            saveAllData();
+            saveToLocalStorage();
             renderCalendar();
             renderStats();
         }
@@ -971,7 +940,7 @@
         function setupDrawerTags() {
             const gymContainer = document.getElementById('drawerGymTags');
             gymContainer.innerHTML = '';
-            PRESET_GYM_TAGS.forEach(tag => {
+            PRESET_WORKOUT_TAGS.forEach(tag => {
                 const btn = document.createElement('button');
                 btn.type = 'button';
                 btn.className = 'px-2 py-1 rounded-lg border text-[10px] font-semibold bg-slate-900 border-slate-800 text-slate-300 hover:border-emerald-500 transition';
@@ -1041,24 +1010,33 @@
         }
 
         function updateDrawerStatusUI() {
+            // Gym Button
             document.getElementById('drawerBtnGym').className = drawerGymStatus === 'gym'
-                ? 'py-2.5 px-2 rounded-xl border-2 border-emerald-500 bg-emerald-950/80 text-emerald-300 font-black text-xs flex items-center justify-center gap-1 shadow-sm'
+                ? 'py-2.5 px-2 rounded-xl border-2 border-emerald-500 bg-emerald-950/90 text-emerald-300 font-black text-xs flex items-center justify-center gap-1 shadow-sm'
                 : 'py-2.5 px-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-400 font-bold text-xs flex items-center justify-center gap-1';
 
+            // Home Workout Button
+            document.getElementById('drawerBtnHome').className = drawerGymStatus === 'homeworkout'
+                ? 'py-2.5 px-2 rounded-xl border-2 border-teal-500 bg-teal-950/90 text-teal-300 font-black text-xs flex items-center justify-center gap-1 shadow-sm'
+                : 'py-2.5 px-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-400 font-bold text-xs flex items-center justify-center gap-1';
+
+            // Skip Button
             document.getElementById('drawerBtnGymSkip').className = drawerGymStatus === 'skip'
-                ? 'py-2.5 px-2 rounded-xl border-2 border-rose-500 bg-rose-950/80 text-rose-300 font-black text-xs flex items-center justify-center gap-1 shadow-sm'
+                ? 'py-2.5 px-2 rounded-xl border-2 border-rose-500 bg-rose-950/90 text-rose-300 font-black text-xs flex items-center justify-center gap-1 shadow-sm'
                 : 'py-2.5 px-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-400 font-bold text-xs flex items-center justify-center gap-1';
 
+            // Clear Button
             document.getElementById('drawerBtnGymNone').className = drawerGymStatus === null
                 ? 'py-2.5 px-2 rounded-xl border-2 border-slate-600 bg-slate-800 text-white font-black text-xs flex items-center justify-center gap-1'
                 : 'py-2.5 px-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-500 font-bold text-xs flex items-center justify-center gap-1';
 
+            // Clean Day Buttons
             document.getElementById('drawerBtnClean').className = drawerCleanStatus === 'clean'
-                ? 'py-2.5 px-2 rounded-xl border-2 border-cyan-500 bg-cyan-950/80 text-cyan-300 font-black text-xs flex items-center justify-center gap-1 shadow-sm'
+                ? 'py-2.5 px-2 rounded-xl border-2 border-cyan-500 bg-cyan-950/90 text-cyan-300 font-black text-xs flex items-center justify-center gap-1 shadow-sm'
                 : 'py-2.5 px-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-400 font-bold text-xs flex items-center justify-center gap-1';
 
             document.getElementById('drawerBtnRelapse').className = drawerCleanStatus === 'relapse'
-                ? 'py-2.5 px-2 rounded-xl border-2 border-rose-500 bg-rose-950/80 text-rose-300 font-black text-xs flex items-center justify-center gap-1 shadow-sm'
+                ? 'py-2.5 px-2 rounded-xl border-2 border-rose-500 bg-rose-950/90 text-rose-300 font-black text-xs flex items-center justify-center gap-1 shadow-sm'
                 : 'py-2.5 px-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-400 font-bold text-xs flex items-center justify-center gap-1';
 
             document.getElementById('drawerBtnCleanNone').className = drawerCleanStatus === null
@@ -1069,7 +1047,7 @@
         function updateDrawerTagUI() {
             const gymBtns = document.getElementById('drawerGymTags').querySelectorAll('button');
             gymBtns.forEach((btn, idx) => {
-                if (PRESET_GYM_TAGS[idx].label === drawerGymTag) {
+                if (PRESET_WORKOUT_TAGS[idx].label === drawerGymTag) {
                     btn.classList.add('ring-2', 'ring-emerald-400', 'font-black');
                 } else {
                     btn.classList.remove('ring-2', 'ring-emerald-400', 'font-black');
@@ -1105,15 +1083,15 @@
                 };
             }
 
-            if (drawerGymStatus === 'gym' || drawerCleanStatus === 'clean') {
+            if (drawerGymStatus === 'gym' || drawerGymStatus === 'homeworkout' || drawerCleanStatus === 'clean') {
                 triggerConfetti();
             }
 
-            saveAllData();
+            saveToLocalStorage();
             renderCalendar();
             renderStats();
             closeDrawer();
-            showToast('Rekod berjaya disimpan!', 'success');
+            showToast('Rekod tersimpan dalam peranti!', 'success');
         }
 
         // EXPORT / IMPORT DATA
@@ -1127,7 +1105,7 @@
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(habitData, null, 2));
             const anchor = document.createElement('a');
             anchor.setAttribute("href", dataStr);
-            anchor.setAttribute("download", `Gym_Clean_Tracker_Backup_${formatDateKey(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate())}.json`);
+            anchor.setAttribute("download", `Workout_Focus_Tracker_Backup_${formatDateKey(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate())}.json`);
             document.body.appendChild(anchor);
             anchor.click();
             anchor.remove();
@@ -1143,7 +1121,8 @@
                     const imported = JSON.parse(evt.target.result);
                     if (typeof imported === 'object' && imported !== null) {
                         habitData = imported;
-                        saveAllData();
+                        saveToLocalStorage();
+                        migrateLegacyData();
                         renderCalendar();
                         renderStats();
                         closeExportImportModal();
@@ -1181,7 +1160,7 @@
                 }
             });
 
-            saveAllData();
+            saveToLocalStorage();
             renderCalendar();
             renderStats();
             cancelResetMonth();
@@ -1195,7 +1174,7 @@
                     particleCount: 35,
                     spread: 55,
                     origin: { y: 0.8 },
-                    colors: ['#10b981', '#06b6d4', '#f59e0b']
+                    colors: ['#10b981', '#0d9488', '#06b6d4', '#f59e0b']
                 });
             }
         }
